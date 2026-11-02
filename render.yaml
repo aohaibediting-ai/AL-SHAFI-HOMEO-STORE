@@ -1,0 +1,40 @@
+# Render.com deployment configuration
+# https://render.com/docs/yaml-spec
+
+services:
+  - type: web
+    name: al-shafi-homeo-store
+    runtime: node
+    region: singapore  # Closest to Pakistan
+    plan: free         # Free tier — upgrade when ready
+
+    # Root of the project
+    rootDir: .
+
+    # Build: install deps for both server & client, then build React
+    buildCommand: |
+      cd server && npm install && cd ../client && npm install && npm run build
+
+    # Start: run the Express server (it serves the built React from client/dist)
+    startCommand: cd server && node src/index.js
+
+    # Environment Variables — set these in Render Dashboard!
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000   # Render assigns this automatically, but set as fallback
+      - key: JWT_SECRET
+        generateValue: true  # Render auto-generates a secure random value
+      - key: DATABASE_PATH
+        value: ./data/store.db
+      - key: UPLOAD_DIR
+        value: ./uploads
+      - key: CLIENT_URL
+        value: https://al-shafi-homeo-store.onrender.com  # Change to your actual URL
+
+    # Persistent Disk — IMPORTANT: keeps the database & uploads across deploys
+    disk:
+      name: al-shafi-data
+      mountPath: /opt/render/project/src/server/data
+      sizeGB: 1  # 1 GB free disk (upgrade if needed)

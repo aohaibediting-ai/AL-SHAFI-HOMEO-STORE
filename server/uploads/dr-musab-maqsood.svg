@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+    <defs>
+      <linearGradient id="docGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#065f46"/>
+        <stop offset="100%" stop-color="#047857"/>
+      </linearGradient>
+    </defs>
+    <rect width="400" height="400" rx="32" fill="#f0fdf4"/>
+    <circle cx="200" cy="200" r="160" fill="url(#docGrad)"/>
+    <!-- Doctor Silhouette / Medical Professional Portrait -->
+    <!-- Head -->
+    <circle cx="200" cy="150" r="55" fill="#fde047" opacity="0.95"/>
+    <path d="M160 140 Q200 95 240 140 Q200 120 160 140 Z" fill="#1e293b"/>
+    <!-- Stethoscope -->
+    <path d="M165 210 Q160 270 200 280 Q240 270 235 210" fill="none" stroke="#e2e8f0" stroke-width="8" stroke-linecap="round"/>
+    <circle cx="200" cy="285" r="12" fill="#cbd5e1" stroke="#94a3b8" stroke-width="3"/>
+    <!-- Coat -->
+    <path d="M120 360 C120 250 150 215 200 215 C250 215 280 250 280 360 Z" fill="#ffffff"/>
+    <path d="M195 215 L205 215 L205 360 L195 360 Z" fill="#e2e8f0"/>
+    <polygon points="170,215 200,265 200,215" fill="#047857"/>
+    <polygon points="230,215 200,265 200,215" fill="#047857"/>
+    <!-- Badge -->
+    <rect x="220" y="270" width="40" height="15" rx="3" fill="#059669"/>
+    <text x="240" y="281" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="#ffffff" text-anchor="middle">DHMS</text>
+  </svg>

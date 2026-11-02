@@ -1,0 +1,16 @@
+{
+  "name": "al-shafi-homeo-store",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AL SHAFI HOMEO STORE - Complete Homeopathy E-Commerce Platform",
+  "scripts": {
+    "install:all": "cd server && npm install && cd ../client && npm install",
+    "dev": "concurrently \"cd server && npm run dev\" \"cd client && npm run dev\"",
+    "build": "cd client && npm run build",
+    "start": "cd server && npm start",
+    "seed": "cd server && node src/seed.js"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
