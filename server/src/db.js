@@ -6,8 +6,10 @@ let db;
 const dbPath = path.resolve(process.env.DATABASE_PATH || './data/store.db');
 const dbDir = path.dirname(dbPath);
 
+let inTransaction = false;
+
 function saveDb() {
-  if (!db) return;
+  if (!db || inTransaction) return;
   const data = db.export();
   const buffer = Buffer.from(data);
   fs.writeFileSync(dbPath, buffer);
@@ -32,19 +34,26 @@ function dbRun(sql, params = []) {
   const lastIdResult = db.exec("SELECT last_insert_rowid() as id");
   const lastId = lastIdResult[0] && lastIdResult[0].values && lastIdResult[0].values[0] ? lastIdResult[0].values[0][0] : 0;
   const changes = db.getRowsModified();
-  saveDb();
+  if (!inTransaction) {
+    saveDb();
+  }
   return { lastInsertRowid: lastId, changes };
 }
 
 function dbTransaction(fn) {
+  inTransaction = true;
   db.run('BEGIN TRANSACTION');
   try {
     const result = fn();
     db.run('COMMIT');
+    inTransaction = false;
     saveDb();
     return result;
   } catch (err) {
-    db.run('ROLLBACK');
+    try {
+      db.run('ROLLBACK');
+    } catch (_) {}
+    inTransaction = false;
     throw err;
   }
 }

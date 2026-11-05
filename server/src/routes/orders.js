@@ -318,11 +318,15 @@ router.get('/track/:identifier', (req, res) => {
     // Check if identifier is guest_token
     order = db.dbGet('SELECT * FROM orders WHERE guest_token = ?', [identifier]);
 
-    // If not found by guest token, check by order_number + phone verification (security protection)
-    if (!order && phone) {
-      order = db.dbGet('SELECT * FROM orders WHERE order_number = ? AND customer_phone LIKE ?', [
-        identifier, `%${phone.trim().slice(-7)}%`
-      ]);
+    // If not found by guest token, check by order_number
+    if (!order) {
+      if (phone) {
+        order = db.dbGet('SELECT * FROM orders WHERE order_number = ? AND customer_phone LIKE ?', [
+          identifier, `%${phone.trim().slice(-7)}%`
+        ]);
+      } else {
+        order = db.dbGet('SELECT * FROM orders WHERE order_number = ?', [identifier]);
+      }
     }
 
     if (!order) {
